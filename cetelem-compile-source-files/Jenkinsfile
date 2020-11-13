@@ -18,5 +18,35 @@ pipeline pipeline {
                 sh "touch $COMPILATION_SERVER_PATH$(date '+%Y-%m-%d_%H:%M:%S').compiled"
             }
         }
-    }   
+    }
+
+    post {
+        failure {
+            script {
+                /*def myCompilationNumber = "$BUILD_NUMBER"
+
+                if (myCompilationNumber == "500") {
+                    build job: ...
+                } else {
+
+                } */  
+
+                build job: 'cetelem-send-email', parameters: [
+                    string(name: 'TO', value: "$EMAIL_LIST_IT_TEAM"),
+                    string(name: 'SUBJECT', value: "Error en Job - $JOB_NAME - $BUILD_NUMBER"),
+                    string(name: 'BODY', value: "Se ha detectado un error en el Job $JOB_NAME, ha fallado la build $BUILD_NUMBER")
+                ]
+            }        
+        }
+
+        success  {
+            script {
+                build job: 'cetelem-send-email', parameters: [
+                    string(name: 'TO', value: "$EMAIL_LIST_DEV_TEAM"),
+                    string(name: 'SUBJECT', value: "Compilación de Job - $JOB_NAME - $BUILD_NUMBER - con éxito :D"),
+                    string(name: 'BODY', value: "Te informo que en el Job $JOB_NAME se ha compilado de forma correcta.")
+                ]
+            }  
+        }      
+    }
 }
