@@ -1,4 +1,4 @@
-pipeline pipeline {
+pipeline {
     agent any
     options {
         buildDiscarder(logRotator(numToKeepStr: "${env.LOG_ROTATOR_NUM_TO_KEEP}", artifactNumToKeepStr: "${env.LOG_ROTATOR_ARTIFACT_NUM_TO_KEEP}"))
@@ -15,7 +15,7 @@ pipeline pipeline {
         stage('Compile source files') {
             steps {
                 sh "ls -la $COMPILATION_SERVER_PATH"
-                sh "touch $COMPILATION_SERVER_PATH$(date '+%Y-%m-%d_%H:%M:%S').compiled"
+                sh "touch $COMPILATION_SERVER_PATH\$(date '+%Y-%m-%d_%H:%M:%S').compiled"
             }
         }
     }
