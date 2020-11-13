@@ -14,8 +14,8 @@ pipeline pipeline {
 
         stage('Compile source files') {
             steps {
-                sh "ls -la /home/jenkins/jenkins_server/files_to_compile/"
-                sh "touch /home/jenkins/jenkins_server/files_to_compile/$(date '+%Y-%m-%d_%H:%M:%S').compiled"
+                sh "ls -la $COMPILATION_SERVER_PATH"
+                sh "touch $COMPILATION_SERVER_PATH$(date '+%Y-%m-%d_%H:%M:%S').compiled"
             }
         }
     }   
