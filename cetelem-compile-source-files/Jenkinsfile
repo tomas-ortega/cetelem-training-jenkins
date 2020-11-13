@@ -12,6 +12,12 @@ pipeline {
             }
         }
 
+        stage('DEBUG -> Incoming Parameters') {
+            steps {
+               println "COMPILATION_SERVER_PATH: " + "$COMPILATION_SERVER_PATH"
+            }
+        }   
+
         stage('Compile source files') {
             steps {
                 sh "ls -la $COMPILATION_SERVER_PATH"

@@ -12,6 +12,15 @@ pipeline {
             }
         }
 
+        stage('DEBUG -> Incoming Parameters') {
+            steps {
+               println "FROM: " + "$FROM"
+               println "TO: " + "$TO"
+               println "SUBJECT: " + "$SUBJECT"
+               println "BODY: " + "$BODY"
+            }
+        }   
+
         stage('Send Email') {
             steps {
                emailext (
