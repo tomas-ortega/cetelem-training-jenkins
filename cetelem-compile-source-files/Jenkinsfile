@@ -1,0 +1,22 @@
+pipeline pipeline {
+    agent any
+    options {
+        buildDiscarder(logRotator(numToKeepStr: "${env.LOG_ROTATOR_NUM_TO_KEEP}", artifactNumToKeepStr: "${env.LOG_ROTATOR_ARTIFACT_NUM_TO_KEEP}"))
+        timestamps()
+    }
+
+    stages {
+        stage('Clean WorkSpace') {
+            steps {
+               cleanWs()
+            }
+        }
+
+        stage('Compile source files') {
+            steps {
+                sh "ls -la /home/jenkins/jenkins_server/files_to_compile/"
+                sh "touch /home/jenkins/jenkins_server/files_to_compile/$(date '+%Y-%m-%d_%H:%M:%S').compiled"
+            }
+        }
+    }   
+}
